@@ -1,24 +1,22 @@
-import React, { Fragment, Component } from 'react';
-import { SafeAreaView, StyleSheet, View, Button, Text } from 'react-native';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { StyleSheet, View, Button, Text } from 'react-native';
+import { changeCount } from '../Redux/actions/counts';
 
 class Counter extends Component {
-  state = { count: 0 };
   decrementCount() {
-    let { count } = this.state;
+    let { count, actions } = this.props;
     count--;
-    this.setState({
-      count,
-    });
+    actions.changeCount(count);
   }
   incrementCount() {
-    let { count } = this.state;
+    let { count, actions } = this.props;
     count++;
-    this.setState({
-      count,
-    });
+    actions.changeCount(count);
   }
   render() {
-    const { count } = this.state;
+    const { count } = this.props;
     return (
       <View styles={styles.container}>
         <Button title="increment" onPress={() => this.incrementCount()} />
@@ -37,4 +35,13 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Counter;
+const mapStateToProps = (state) => ({
+  count: state.count,
+});
+
+const ActionCreators = Object.assign({}, changeCount);
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators(ActionCreators, dispatch),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Counter);
