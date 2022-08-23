@@ -23,7 +23,7 @@ const Users = () => {
   return (
     <>
       {' '}
-      <View style={{ flex: 1, marginTop: 10, marginorizontal: 20 }}>
+      <View style={{ flex: 1, marginTop: 10 }}>
         <FlatList
           data={users}
           keyExtractor={(item) => item.id.toString()}
